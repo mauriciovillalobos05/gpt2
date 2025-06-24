@@ -34,3 +34,12 @@ dist/
 htmlcov/
 .coverage
 .cache
+
+# Ignore fineweb folder
+edu_fineweb10B/
+
+# Ignore hellaswag folder
+hellaswag/
+
+# Ignore log folder
+log/
