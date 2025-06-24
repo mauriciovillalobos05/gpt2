@@ -13,76 +13,102 @@ This project trains a GPT-2 language model from scratch using the [FineWeb-EDU d
 
 Set up a Python environment and install the required libraries:
 
-python3 -m venv env
+<pre><code>python3 -m venv env
 source env/bin/activate
 pip install -r requirements.txt
+</code></pre>
 
-torch==2.2.0
+**Contents of `requirements.txt`:**
+
+<pre><code>torch==2.2.0
 datasets
 tqdm
 numpy
 tiktoken
 transformers
+</code></pre>
 
-## 📦 Dataset Preparation (fineweb.py)
+---
+
+## 📦 Dataset Preparation (`fineweb.py`)
 
 Before training, you must download and preprocess the FineWeb-EDU dataset:
 
-python fineweb.py
+<pre><code>python fineweb.py
+</code></pre>
+
 This script:
 
-Downloads the "sample-10BT" subset of FineWeb-EDU
-Tokenizes each document using the GPT-2 tokenizer (tiktoken)
-Saves tokenized documents into .npy shards (100M tokens each)
-The first shard is used for validation
-The rest are used for training
-Token files are stored in the ./edu_fineweb10B/ directory.
+- Downloads the `"sample-10BT"` subset of FineWeb-EDU  
+- Tokenizes each document using the GPT-2 tokenizer (`tiktoken`)  
+- Saves tokenized documents into `.npy` shards (100M tokens each)  
+- The **first shard** is used for validation  
+- The **rest** are used for training  
 
-🔐 You may need to authenticate with Hugging Face using:
-huggingface-cli login
+Token files are stored in the `./edu_fineweb10B/` directory.
 
-## 🚀 Training (train_gpt2.py)
+🔐 You may need to authenticate with Hugging Face:
+
+<pre><code>huggingface-cli login
+</code></pre>
+
+---
+
+## 🚀 Training (`train_gpt2.py`)
 
 Once data is prepared, you can launch training:
 
-python train_gpt2.py
+<pre><code>python train_gpt2.py
+</code></pre>
+
 The training script:
 
-Supports cpu, cuda, and mps (Apple Silicon)
-Logs training loss, validation loss, and HellaSwag accuracy
-Saves model checkpoints and generates text samples
-Example output (MPS backend):
+- Supports `cpu`, `cuda`, and `mps` (Apple Silicon)  
+- Logs training loss, validation loss, and HellaSwag accuracy  
+- Saves model checkpoints and generates text samples  
 
-using device: mps
+**Example output (MPS backend):**
+
+<pre><code>using device: mps
 total desired batch size: 65536
-=> calculated gradient accumulation steps: 64
+=&gt; calculated gradient accumulation steps: 64
 validation loss: 10.8766
 HellaSwag accuracy: 2592/10042=0.2581
 step     0 | loss: 10.873720 | lr 8.3916e-07 | ...
-Logs and checkpoints are saved to the ./log/ directory.
+</code></pre>
+
+Logs and checkpoints are saved to the `./log/` directory.
+
+---
 
 ## ⚙️ Configuration
 
-You can modify model size and behavior in train_gpt2.py:
+You can modify model size and behavior in `train_gpt2.py`:
 
-GPTConfig(
+<pre><code>GPTConfig(
     block_size=1024,
     vocab_size=50304,
     n_layer=4,
     n_head=4,
     n_embd=256
 )
-For MPS compatibility, smaller models and batch sizes are recommended.
+</code></pre>
+
+⚠️ For MPS compatibility, smaller models and batch sizes are recommended.
+
+---
 
 ## 🧪 Evaluation
 
-Validation loss is computed every 100 steps
-HellaSwag multiple-choice accuracy is evaluated periodically
-Text generation is triggered from a fixed prompt every 100 steps
+- Validation loss is computed every **100 steps**  
+- HellaSwag multiple-choice accuracy is evaluated periodically  
+- Text generation is triggered from a fixed prompt every **100 steps**
 
-## Acknowledgments
+---
 
-FineWeb-EDU Dataset
-tiktoken — GPT-2 tokenizer
-Inspired by minGPT
-https://youtu.be/l8pRSuU81PU?si=vR7C_bdsW6V_g9X-
+## 🙏 Acknowledgments
+
+- [FineWeb-EDU Dataset](https://huggingface.co/datasets/HuggingFaceFW/fineweb-edu)  
+- [tiktoken](https://github.com/openai/tiktoken) — GPT-2 tokenizer  
+- Inspired by [minGPT](https://github.com/karpathy/minGPT)  
+- [YouTube explanation](https://youtu.be/l8pRSuU81PU?si=vR7C_bdsW6V_g9X-)
