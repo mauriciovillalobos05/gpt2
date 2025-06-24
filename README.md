@@ -24,7 +24,7 @@ numpy
 tiktoken
 transformers
 
-📦 Dataset Preparation (fineweb.py)
+## 📦 Dataset Preparation (fineweb.py)
 
 Before training, you must download and preprocess the FineWeb-EDU dataset:
 
@@ -40,7 +40,8 @@ Token files are stored in the ./edu_fineweb10B/ directory.
 
 🔐 You may need to authenticate with Hugging Face using:
 huggingface-cli login
-🚀 Training (train_gpt2.py)
+
+## 🚀 Training (train_gpt2.py)
 
 Once data is prepared, you can launch training:
 
@@ -60,7 +61,7 @@ HellaSwag accuracy: 2592/10042=0.2581
 step     0 | loss: 10.873720 | lr 8.3916e-07 | ...
 Logs and checkpoints are saved to the ./log/ directory.
 
-⚙️ Configuration
+## ⚙️ Configuration
 
 You can modify model size and behavior in train_gpt2.py:
 
@@ -73,27 +74,15 @@ GPTConfig(
 )
 For MPS compatibility, smaller models and batch sizes are recommended.
 
-🧪 Evaluation
+## 🧪 Evaluation
 
 Validation loss is computed every 100 steps
 HellaSwag multiple-choice accuracy is evaluated periodically
 Text generation is triggered from a fixed prompt every 100 steps
-🍎 Apple Silicon Tips (MPS Backend)
 
-If you hit memory errors, try reducing block_size or total_batch_size
-You can bypass the memory cap by setting:
-export PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0
-⚠️ Use with caution — may affect system stability
-📁 Project Structure
-
-.
-├── fineweb.py            # Tokenizes and shards FineWeb-EDU
-├── train_gpt2.py         # Custom GPT-2 training loop
-├── edu_fineweb10B/       # Tokenized data shards
-├── log/                  # Logs and model checkpoints
-└── README.md
-🙌 Acknowledgments
+## Acknowledgments
 
 FineWeb-EDU Dataset
 tiktoken — GPT-2 tokenizer
 Inspired by minGPT
+https://youtu.be/l8pRSuU81PU?si=vR7C_bdsW6V_g9X-
